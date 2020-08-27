@@ -31,7 +31,7 @@ class MyMangaStruct(object):
 
 		
 def CheckNewEntriesAndNewChapters(n):
-	URL = Website[0]+MyMangaList[n].MangaName.replace(' ','_').replace('\'','_')+"/"
+	URL = Website[0]+MyMangaList[n].MangaName.replace(' ','_').replace('\'','_').replace(',','').replace('!','')+"/"
 	try:
 		req = urllib.request.Request(URL,headers={'User-Agent': 'Mozilla/5.0'})
 		response = urllib.request.urlopen(req)
@@ -66,13 +66,12 @@ def GetLatestChapter(n):
 		UpdateStatus(n)
 		if MyMangaList[n].Status == 1:
 			if( (float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) > 0 )):
-				print(MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),'green')+ " New chapters."+ MyMangaList[n].MangaWebSiteKey.rstrip('\n')+MyMangaList[n].NewChapter.rstrip('\n'))
+				print(MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),'green')+ " New chapters.")
 			else:
-				print(MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),'red')+ " New chapters."+ MyMangaList[n].MangaWebSiteKey.rstrip('\n')+MyMangaList[n].NewChapter.rstrip('\n'))
-		else:
-			print(0)
+				print(MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),'red')+ " New chapters.")
+		
 	else:
-		print("Invalid Manga Link"+ MyMangaList[n].MangaWebSiteKey +MyMangaList[n].NewChapter)
+		print("Invalid Manga Link"+str(MyMangaList[n].MangaName.rstrip('\n')))
 
 def UpdateStatus(n):
 	if(float(MyMangaList[n].ChapterRead) != float(MyMangaList[n].NewChapter)):
@@ -109,6 +108,7 @@ def UpdateMangaFile():
 
 def main():
 	PopulateMangaList()
+	#GetLatestChapter(49)
 	for i in range (len(MyMangaList)):
 		GetLatestChapter(i)
 	UpdateMangaFile()
