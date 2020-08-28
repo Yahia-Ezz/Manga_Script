@@ -1,105 +1,106 @@
 from dataclasses import dataclass
+from termcolor import colored
 import urllib.request
 import re
-from termcolor import colored
-import tkinter as tk 
-import ctypes
-import os
 
-#user32 = ctypes.windll.user32
+# import os
+# import tkinter as tk 
+# user32 = ctypes.windll.user32
 
-#screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-#(?<=\\n<a rel="nofollow" href="https:\/\/manganelo\.com\/manga\/).+(?=">\\n<img)
-Website = []
-Website.append("https://mangakakalot.com/search/story/")
-Website.append("https://mangatx.com/manga/")
-
+# screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+# (?<=\\n<a rel="nofollow" href="https:\/\/manganelo\.com\/manga\/).+(?=">\\n<img)
 DataFile = "Kissmanga_Bookmarks.txt"
 
-MyMangaList = []
-HTML_return = str()
+MangaList = []
+HmtlPage = str()
+
+WebSite = list()
+WebSite.append('https://mangakakalot.com/search/story/')
+WebSite.append('https://mangatx.com/manga/')
+
+Regex = list()
+Regex.append('(?<=\<a rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/).+?(?=\/chapter_)')
+Regex.append('(?<=\\n<a href=\"https:\/\/mangakakalot\.com\/chapter\/).+?(?=\/chapter_)')
+Regex.append('')
+
 	
 @dataclass
 class MyMangaStruct(object):
-	def __init__(self,MangaName,ChapterRead,MangaWebSite,MangaWebSiteKey,NewChapter,Status):
-		self.MangaName = MangaName
+	def __init__(self,Name,ChapterRead,WebSite,WebSiteKey,NewChapter,Status):
+		self.Name = Name
 		self.ChapterRead = ChapterRead
-		self.MangaWebSite = MangaWebSite
-		self.MangaWebSiteKey = MangaWebSiteKey
+		self.WebSite = WebSite
+		self.WebSiteKey = WebSiteKey
 		self.NewChapter = NewChapter
 		self.Status  = Status
 
 		
 def CheckNewEntriesAndNewChapters(n):
-	URL = Website[0]+MyMangaList[n].MangaName.replace(' ','_').replace('\'','_').replace(',','').replace('!','')+"/"
+	global HmtlPage		
+	URL = WebSite[0]+MangaList[n].Name.replace(' ','_').replace('\'','_').replace(',','').replace('!','')+"/"
 	try:
 		req = urllib.request.Request(URL,headers={'User-Agent': 'Mozilla/5.0'})
 		response = urllib.request.urlopen(req)
 	
 		if(response.getcode() == 200):
-			global HTML_return
-			HTML_return = response.read()
+			HmtlPage = response.read()
 			response.close()
-			Flag="OK"
-			return Flag
+			return "OK"
 	except:
-		Flag="NOK"
-		return Flag
+		return "NOK"
 
 def GetLatestChapter(n):
-	Check = CheckNewEntriesAndNewChapters(n)
-	if "OK" == Check:
-		global HTML_return
-		the_page = HTML_return
-		if (MyMangaList[n].MangaWebSiteKey == 'None\n'):
-			SearchKey = re.search(r'(?<=\<a rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/).+?(?=\/chapter_)',str(the_page))
-			if( str(SearchKey) == 'None'):
-				SearchKey = re.search(r'(?<=\\n<a href=\"https:\/\/mangakakalot\.com\/chapter\/).+?(?=\/chapter_)',str(the_page))
-			MyMangaList[n].MangaWebSiteKey = str(SearchKey[0]) + '\n'
+	global HmtlPage
+	if "OK" == CheckNewEntriesAndNewChapters(n):
+		if (MangaList[n].WebSiteKey == 'None\n'):
+			SearchKey = re.search(rRegex[0],str(HmtlPage))
+			if( SearchKey == 'None'):
+				SearchKey = re.search(rRgex[1],str(HmtlPage))
+			MangaList[n].WebSiteKey = str(SearchKey[0]+'\n') 
 		
-		MyMangaList[n].MangaWebSite = "https://mangakakalot.com/cahpter"
-		NewChapter = re.search(r'(?<=rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/'+str(MyMangaList[n].MangaWebSiteKey).rstrip('\n')+'\\/chapter_).+?(?=\" title=\")',str(the_page))
+		MangaList[n].WebSite = "https://mangakakalot.com/cahpter"
+		NewChapter = re.search(r'(?<=rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/'+str(MangaList[n].WebSiteKey).rstrip('\n')+'\\/chapter_).+?(?=\" title=\")',str(HmtlPage))
 		if ( str(NewChapter) == 'None'):
-			NewChapter = re.search(r'(?<=a href=\"https:\/\/mangakakalot\.com\/chapter\/'+str(MyMangaList[n].MangaWebSiteKey).rstrip('\n')+'\\/chapter_).+?(?=\" title=\")',str(the_page))
+			NewChapter = re.search(r'(?<=a href=\"https:\/\/mangakakalot\.com\/chapter\/'+str(MangaList[n].WebSiteKey).rstrip('\n')+'\\/chapter_).+?(?=\" title=\")',str(HmtlPage))
 			
-		MyMangaList[n].NewChapter = NewChapter[0]
+		MangaList[n].NewChapter = NewChapter[0]
 		UpdateStatus(n)
-		if MyMangaList[n].Status == 1:
-			if( (float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) > 0 )):
+		if MangaList[n].Status == 1:
+			if( (float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead) > 0 )):
 				color = 'green'
 			else:
 				color = 'red'
-			print(str(n) + " - " + MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),color)+ " New chapters.")
-		else:
-		print("Invalid Manga Link"+str(MyMangaList[n].MangaName.rstrip('\n')))
+			print(str(n) + " - " + MangaList[n].Name + " : " + colored(str( float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead) ),color)+ " New chapters.")
+	else:
+		print("Invalid Manga Link"+str(MangaList[n].Name.rstrip('\n')))
 
 def UpdateStatus(n):
-	if(float(MyMangaList[n].ChapterRead) != float(MyMangaList[n].NewChapter)):
-		MyMangaList[n].Status = 1
+	if(float(MangaList[n].ChapterRead) != float(MangaList[n].NewChapter)):
+		MangaList[n].Status = 1
 	else:
-		MyMangaList[n].Status = 0
+		MangaList[n].Status = 0
 
 def PopulateMangaList():
 	with open(DataFile, "r") as my_file:
 		for line in my_file:
 			Tmp=line.split('^')
 			if(len(Tmp) == 1):
-				MyMangaList.append(MyMangaStruct(Tmp[0].rstrip("\n"),str(0),None,None,'\n',''))
+				MangaList.append(MyMangaStruct(Tmp[0].rstrip("\n"),str(0),None,None,'\n',''))
 			elif(len(Tmp) == 2):
-				MyMangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip("\n"),None,None,'\n',''))
+				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip("\n"),None,None,'\n',''))
 			else:	
-				MyMangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],'\n',''))
+				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],'\n',''))
 
 def UpdateMangaFile():
 	MyMangaFile = open(DataFile,"r")
 	MyMangaLines = MyMangaFile.readlines()
 	Tmp=""	
 	i=0
-	global MyMangaList
+	global MangaList
 	for Line in (MyMangaLines):
-		Tmp = str(MyMangaList[i].MangaName) + "^" + str(MyMangaList[i].ChapterRead) + "^"  
-		Tmp += str(MyMangaList[i].MangaWebSite) + "^"+ str(MyMangaList[i].MangaWebSiteKey.rstrip('\n')) 
-		Tmp += "^" + str(MyMangaList[i].NewChapter)+"\n"
+		Tmp = str(MangaList[i].Name) + "^" + str(MangaList[i].ChapterRead) + "^"  
+		Tmp += str(MangaList[i].WebSite) + "^"+ str(MangaList[i].WebSiteKey.rstrip('\n')) 
+		Tmp += "^" + str(MangaList[i].NewChapter)+"\n"
 		MyMangaLines[i] = Tmp
 		i += 1
 	
@@ -110,7 +111,7 @@ def UpdateMangaFile():
 def main():
 	PopulateMangaList()
 	#GetLatestChapter(49)
-	for i in range (len(MyMangaList)):
+	for i in range (len(MangaList)):
 		GetLatestChapter(i)
 	UpdateMangaFile()
 
