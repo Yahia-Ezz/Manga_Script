@@ -4,7 +4,7 @@ import re
 from termcolor import colored
 import tkinter as tk 
 import ctypes
-
+import os
 
 #user32 = ctypes.windll.user32
 
@@ -14,7 +14,7 @@ Website = []
 Website.append("https://mangakakalot.com/search/story/")
 Website.append("https://mangatx.com/manga/")
 
-DataFile = 'Kissmanga Bookmarks.txt'
+DataFile = "Kissmanga_Bookmarks.txt"
 
 MyMangaList = []
 HTML_return = str()
@@ -66,11 +66,11 @@ def GetLatestChapter(n):
 		UpdateStatus(n)
 		if MyMangaList[n].Status == 1:
 			if( (float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) > 0 )):
-				print(MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),'green')+ " New chapters.")
+				color = 'green'
 			else:
-				print(MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),'red')+ " New chapters.")
-		
-	else:
+				color = 'red'
+			print(str(n) + " - " + MyMangaList[n].MangaName + " : " + colored(str( float(MyMangaList[n].NewChapter)-float(MyMangaList[n].ChapterRead) ),color)+ " New chapters.")
+		else:
 		print("Invalid Manga Link"+str(MyMangaList[n].MangaName.rstrip('\n')))
 
 def UpdateStatus(n):
@@ -84,11 +84,11 @@ def PopulateMangaList():
 		for line in my_file:
 			Tmp=line.split('^')
 			if(len(Tmp) == 1):
-				MyMangaList.append(MyMangaStruct(Tmp[0].rstrip("\n"),str(0),None,'None\n','',''))
+				MyMangaList.append(MyMangaStruct(Tmp[0].rstrip("\n"),str(0),None,None,'\n',''))
 			elif(len(Tmp) == 2):
-				MyMangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip("\n"),None,'None\n','',''))
+				MyMangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip("\n"),None,None,'\n',''))
 			else:	
-				MyMangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],'',''))
+				MyMangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],'\n',''))
 
 def UpdateMangaFile():
 	MyMangaFile = open(DataFile,"r")
@@ -98,9 +98,10 @@ def UpdateMangaFile():
 	global MyMangaList
 	for Line in (MyMangaLines):
 		Tmp = str(MyMangaList[i].MangaName) + "^" + str(MyMangaList[i].ChapterRead) + "^"  
-		Tmp += str(MyMangaList[i].MangaWebSite) + "^"+ str(MyMangaList[i].MangaWebSiteKey)
-		MyMangaLines[i] = (Tmp)
-		i+=1
+		Tmp += str(MyMangaList[i].MangaWebSite) + "^"+ str(MyMangaList[i].MangaWebSiteKey.rstrip('\n')) 
+		Tmp += "^" + str(MyMangaList[i].NewChapter)+"\n"
+		MyMangaLines[i] = Tmp
+		i += 1
 	
 	MyMangaFile = open(DataFile,"w")
 	MyMangaFile.writelines(MyMangaLines)
