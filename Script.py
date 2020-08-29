@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 from termcolor import colored
+import requests
 import urllib.request
 import re
 
-# import os
+
+ # import os
 # import tkinter as tk 
 # user32 = ctypes.windll.user32
 
@@ -16,19 +18,23 @@ MangaList= list()
 HmtlPage = str()
 
 Website = list()
-Website.append('https://mangadex.org/search?tag_mode_exc=any&tag_mode_inc=all&title=')
 Website.append('https://mangakakalot.com/search/story/')
 Website.append('https://mangatx.com/manga/')
 
 #Clean Regex '(?<=.)\^\D+(?!\^)\w+\^\w+'
 
 Regex = list()
-Regex.append('(?<=<div><span class=\"rounded flag flag-)..(?=\")')
 Regex.append('(?<=\<a rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/).+?(?=\/chapter_)')
 Regex.append('(?<=\\n<a href=\"https:\/\/mangakakalot\.com\/chapter\/).+?(?=\/chapter_)')
+Regex.append('(?<=<a class=\"a-h\" href=\"https://manganelo\.com/genre-40\">).+(?=</a>)|(?<=<a class=\"a-h\" href=\"https://manganelo\.com/genre-44\">).+(?=</a>)')
 
-FormatChar = []
-FormatChar.append({' ':'%20','\'':'%27',',':'%2C'})	
+
+FormatChar = list()
+FormatChar.append({' ':'_','\'':'',',':'','!':''})
+FormatChar.append({' ':'_','\'':'',',':'','!':''})
+FormatChar.append({' ':'_','\'':'',',':'','!':''})
+
+
 
 @dataclass
 class MyMangaStruct(object):
@@ -54,7 +60,9 @@ def PopulateMangaList():
 
 def GetLatestChapter(n):
 	if MangaList[n].Origin is None:
-		MangaList[n].Origin = FetchMangaOrigin(n,0)
+		MangaList[n].WebsiteKey = RegexDataFetcher(n,0)
+		MangaList[n].Origin = RegexDataFetcher(n,0)
+	print(MangaList[n].Origin)	
 	# if "OK" == FetchRawHtmlPage(0,n):
 	# 	if (MangaList[n].WebsiteKey == 'None\n'):
 	# 		SearchKey = re.search(rKeyRegex[0],str(HmtlPage))
@@ -78,27 +86,23 @@ def GetLatestChapter(n):
 	# else:
 	# 	print("Invalid Manga Link"+str(MangaList[n].Name.rstrip('\n')))
 
-def FetchMangaOrigin(n,FormatIndex):
+def RegexDataFetcher(n,FormatIndex):
 	global HmtlPage
-	if  FetchRawHtmlPage(str(UrlFormater(MangaList[n].Name,FormatIndex))) == "OK":
-		Origin = re.search(rf'%{Regex[0]}',str(HmtlPage))
-		
-		print(Origin)	
-#	else:
-#		print("NotFound Origin")
-	#print(Origin)
-	#return Origin[0]
+	if  FetchRawHtmlPage(UrlFormater(MangaList[n].Name,FormatIndex)) == "OK":
+		Data = re.search(Regex[FormatIndex],str(HmtlPage))
+	else:
+		print("No Data Found ")
+	return Data[0]
+
 
 def FetchRawHtmlPage(URL):
 	global HmtlPage
 	try:
-		req = urllib.request.Request(URL,headers={'User-Agent': 'Mozilla/5.0'})
+		req = urllib.request.Request(URL,headers={'User-Agent': 'Mozilla/5.0'}) 
 		response = urllib.request.urlopen(req)
-	
 		if(response.getcode() == 200):
 			HmtlPage = response.read()
 			response.close()
-			print(str(HmtlPage))
 			return "OK"
 	except:
 		return "NOK"
@@ -138,13 +142,14 @@ def UpdateMangaFile():
 	MyMangaFile.close()
 
 def main():
-	global MangaList
+	#global MangaList
 	PopulateMangaList()
 	#GetLatestChapter(49)
 	#for i in range (len(MangaList)):
 	#	GetLatestChapter(i)
 	#UpdateMangaFile()
-	GetLatestChapter(2)
+	GetLatestChapter(0)
+
 	
 if __name__ == '__main__':
 	main()
