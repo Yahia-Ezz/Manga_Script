@@ -19,6 +19,7 @@ HmtlPage = str()
 
 Website = list()
 Website.append('https://mangakakalot.com/search/story/')
+Website.append('https://manganelo.com/manga/')
 Website.append('https://mangatx.com/manga/')
 
 #Clean Regex '(?<=.)\^\D+(?!\^)\w+\^\w+'
@@ -26,7 +27,7 @@ Website.append('https://mangatx.com/manga/')
 Regex = list()
 Regex.append('(?<=\<a rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/).+?(?=\/chapter_)')
 Regex.append('(?<=\\n<a href=\"https:\/\/mangakakalot\.com\/chapter\/).+?(?=\/chapter_)')
-Regex.append('(?<=<a class=\"a-h\" href=\"https://manganelo\.com/genre-40\">).+(?=</a>)|(?<=<a class=\"a-h\" href=\"https://manganelo\.com/genre-44\">).+(?=</a>)')
+Regex.append("(?<=genre-40\\\\'>).+?(?=</a>)|(?<=genre-44\\\\'>).+?(?=</a>)")
 
 
 FormatChar = list()
@@ -42,8 +43,8 @@ class MyMangaStruct(object):
 		self.Name = Name
 		self.ChapterRead = ChapterRead
 		self.Origin = Origin
-		self.Website = Website
 		self.WebsiteKey = WebsiteKey
+		self.Website = Website
 		self.NewChapter = NewChapter
 		self.Status  = Status
 
@@ -56,49 +57,40 @@ def PopulateMangaList():
 			elif(len(Tmp) == 2):
 				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip("\n"),None,None,'\n','',''))
 			else:	
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],'\n','',''))
+				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],Tmp[4],'\n','',))
 
-def GetLatestChapter(n):
-	if MangaList[n].Origin is None:
-		MangaList[n].WebsiteKey = RegexDataFetcher(n,0)
-		MangaList[n].Origin = RegexDataFetcher(n,0)
-	print(MangaList[n].Origin)	
-	# if "OK" == FetchRawHtmlPage(0,n):
-	# 	if (MangaList[n].WebsiteKey == 'None\n'):
-	# 		SearchKey = re.search(rKeyRegex[0],str(HmtlPage))
-	# 		if( SearchKey == 'None'):
-	# 			SearchKey = re.search(rKeyRegex[1],str(HmtlPage))
-	# 		MangaList[n].WebsiteKey = str(SearchKey[0]+'\n') 
-		
-	# 	MangaList[n].Website = "https://mangakakalot.com/cahpter"
-	# 	NewChapter = re.search(r'(?<=rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/'+str(MangaList[n].WebsiteKey).rstrip('\n')+'\\/chapter_).+?(?=\" title=\")',str(HmtlPage))
-	# 	if ( str(NewChapter) == 'None'):
-	# 		NewChapter = re.search(r'(?<=a href=\"https:\/\/mangakakalot\.com\/chapter\/'+str(MangaList[n].WebsiteKey).rstrip('\n')+'\\/chapter_).+?(?=\" title=\")',str(HmtlPage))
-			
-	# 	MangaList[n].NewChapter = NewChapter[0]
-	# 	UpdateStatus(n)
-	# 	if MangaList[n].Status == 1:
-	# 		if( (float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead) > 0 )):
-	# 			color = 'green'
-	# 		else:
-	# 			color = 'red'
-	# 		print(str(n) + " - " + MangaList[n].Name + " : " + colored(str( float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead) ),color)+ " New chapters.")
-	# else:
-	# 	print("Invalid Manga Link"+str(MangaList[n].Name.rstrip('\n')))
 
-def RegexDataFetcher(n,FormatIndex):
-	global HmtlPage
-	if  FetchRawHtmlPage(UrlFormater(MangaList[n].Name,FormatIndex)) == "OK":
-		Data = re.search(Regex[FormatIndex],str(HmtlPage))
-	else:
-		print("No Data Found ")
+
+def GetNewChaptersData(n):
+	if( MangaList[n].Origin == None ):
+		MangaList[n].WebsiteKey = GetSearchKey(n)
+		print(MangaList[n].WebsiteKey)
+		print(GetOrigin(n))
+
+def GetSearchKey(n):
+	try:
+		if(FetchRawHtmlPage(UrlFormater(MangaList[n].Name,'GetKey')) == "OK"):
+			Data = re.search(Regex[0],str(HmtlPage))
+	except:
+			Data[0]=("No Key Found !")
+	
+	return Data[0]
+
+def GetOrigin(n):
+	try:
+		if(FetchRawHtmlPage(UrlFormater(MangaList[n].WebsiteKey,'GetOrigin')) == "OK"):
+			Data = re.search(Regex[2],str(HmtlPage))
+	except:
+		print("No Origin Found ")
+	if Data is None:
+		return 'Uknown'
 	return Data[0]
 
 
 def FetchRawHtmlPage(URL):
 	global HmtlPage
 	try:
-		req = urllib.request.Request(URL,headers={'User-Agent': 'Mozilla/5.0'}) 
+		req = urllib.request.Request( URL , headers={'User-Agent': 'Mozilla/5.0'}) 
 		response = urllib.request.urlopen(req)
 		if(response.getcode() == 200):
 			HmtlPage = response.read()
@@ -107,22 +99,14 @@ def FetchRawHtmlPage(URL):
 	except:
 		return "NOK"
 
-
-def UrlFormater(urlText,FormatIndex):
-    global FormatChar,MangaList,Website
-    urlText = "".join([FormatChar[FormatIndex].get(c, c) for c in urlText])
-    urlText = Website[FormatIndex] + urlText
-    return urlText
-		
-
-
-def UpdateStatus(n):
-	if(float(MangaList[n].ChapterRead) != float(MangaList[n].NewChapter)):
-		MangaList[n].Status = 1
-	else:
-		MangaList[n].Status = 0
-
-
+def UrlFormater(urlText,index):
+	if (index == 'GetKey'):
+		i=0
+	elif(index == 'GetOrigin'):
+		i=1
+	urlText = "".join([FormatChar[i].get(c, c) for c in urlText])
+	urlText = Website[i] + urlText
+	return urlText
 
 def UpdateMangaFile():
 	MyMangaFile = open(DataFile,"r")
@@ -142,14 +126,10 @@ def UpdateMangaFile():
 	MyMangaFile.close()
 
 def main():
-	#global MangaList
 	PopulateMangaList()
-	#GetLatestChapter(49)
-	#for i in range (len(MangaList)):
-	#	GetLatestChapter(i)
-	#UpdateMangaFile()
-	GetLatestChapter(0)
-
+#	for i in range (len(MangaList)):
+#		GetNewChaptersData(i)
+	GetNewChaptersData(3)
 	
 if __name__ == '__main__':
 	main()
