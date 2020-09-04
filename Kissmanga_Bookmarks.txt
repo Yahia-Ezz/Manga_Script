@@ -1,6 +1,6 @@
-A Returner's Magic Should Be Special^115
+A Returner's Magic Should Be Special^118
 Again My Life^16
-Apotheosis^617
+Apotheosis^622
 Arafoo Shachiku no Golem Master^16
 Arifureta Shokugyou de Sekai Saikyou^42
 Solo Auto Hunting^40
@@ -19,7 +19,7 @@ Cultivation Chat Group^246
 Dead Sorcerer's City^188
 Dimensional Mercenary^128
 Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka^90
-Dungeon Reset^43
+Dungeon Reset^45
 Enen no Shouboutai^230
 Enoch^14
 Everlasting God of Sword^111
@@ -62,11 +62,11 @@ Nano Machine^10
 Nidome no Jinsei wo Isekai de^41.002.2
 Nozomanu Fushi no Boukensha^28
 OOPARTS^11
-Otherworldly Sword King's Survival Records^52
-Overgeared^40
+Otherworldly Sword King's Survival Records^55
+Overgeared^42
 Overlord^56.1.2
 Pale Throne^40
-Player Reborn^178
+Player Reborn^182
 Ranker Who Lives A Second Time^68
 Ranker's Return^15
 Re:Monster^62
@@ -78,11 +78,11 @@ Shikkaku Mon no Saikyou Kenja^36
 Record Of Ragnarok^35
 Skeleton Soldier Couldn'T Protect The Dungeon^86
 Slave B^37.6
-Solo Leveling^115
+Solo Leveling^117
 Special Martial Arts Extreme Hell Private High School^69.005.5
 Star Martial God Technique^369
 Surviving Demon^10
-Tales of Demons and Gods^289.1
+Tales of Demons and Gods^291
 Tanaka no Isekai Nariagari^5
 Tanaka The Wizard^22
 Tate no Yuusha no Nariagari^67
@@ -90,7 +90,7 @@ Tensei Kenja No Isekai Raifu ~Daini No Shokugyo Wo Ete, Sekai Saikyou Ni Narimas
 Tensei Shitara Ken deshita^38
 Tensei Shitara Slime Datta Ken^73
 The Beginning After The End^72
-The Blade of Evolution-Walking Alone in the Dungeon^17
+The Blade of Evolution-Walking Alone in the Dungeon^20
 The Descent of the Demonic Master^61
 The Dungeon Master^50
 The Gamer^0
@@ -98,8 +98,8 @@ The God of Death^5
 The God of High School^475
 The Great Mage Returns After 4000 Years^43
 The Heaven's List^57.005.5
-The Legendary Moonlight Sculptor^158
-The Live^39
+The Legendary Moonlight Sculptor^160
+The Live^40
 The Magic Chef Of Ice And Fire^59
 The New Gate^60
 The Portal of Wonderland^125
