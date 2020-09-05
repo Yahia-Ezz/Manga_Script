@@ -1,127 +1,21 @@
-A Returner's Magic Should Be Special^118
-Again My Life^16
-Apotheosis^622
-Arafoo Shachiku no Golem Master^16
-Arifureta Shokugyou de Sekai Saikyou^42
-Solo Auto Hunting^40
-Battle Through The Heavens^304
-Berserk of Gluttony^26
-Black Haze^228
-Blind Faith Descent^78
-Boku no Heya ga Dungeon no Kyuukeijo ni Natteshimatta Ken^23
-Boss in School^118
-Boushoku-Hi no Ken^6
-Cate Land^39
-Chi Huang Chuan Qi^93
-CITY OF SANCTUARY^21
-Combat Continent^261
-Cultivation Chat Group^246
-Dead Sorcerer's City^188
-Dimensional Mercenary^128
-Dungeon ni Deai o Motomeru no wa Machigatte Iru Darou ka^90
-Dungeon Reset^45
-Enen no Shouboutai^230
-Enoch^14
-Everlasting God of Sword^111
-Exterminator^18
-FFF-Class Trashero^52
-Gaikotsu Kishi-sama Tadaima Isekai e o Dekake-chuu^33
-Goblin Slayer^51.5
-God of Blackfield^41
-God's Eye Appraiser^15
-GUL^74
-Hardcore Leveling Warrior^0
-Her Summon^88
-Hero? I Quit A Long Time Ago^208
-Hiraheishi wa Kako o Yumemiru^44
-I Am the Sorcerer King^105
-I Log In Alone^34
-The Strongest Wizard Becomes a Countryside Guardsman After Taking an Arrow to the Knee^14.001.1
-Inaka no Home Center Otoko no Jiyuu na Isekai Seikatsu^3.2
-Is It Odd That I Became An Adventurer Even If I Graduated The Witchcraft Institute?^17
-Isekai Maou to Shoukan Shoujo Dorei Majutsu^2.1
-Isekai Shoukan wa Nidome Desu^20.2
-Jaryuu Tensei^27
-Kenja no Mago^51
-Kill the Hero^31.2
-Kuitsume Youhei no Gensou Kitan^14
-Kuro no Souzou Shoukanshi - Tenseisha no Hangyaku^26
-Lawless Zone^23
-Leveling Up, By Only Eating!^35
-Life Howling^57
-Lv2 kara Cheat datta Moto Yuusha Kouho no Mattari Isekai Life^15
-LV999 no Murabito^36
-Mairimashita! Iruma-kun^147
-Manuke na FPS Player ga Isekai e Ochita Baai^4.4
-Martial Legacy^111
-Medical Return^78
-Monogatari no Naka no Hito^19
-Moshi Fanren^259
-My Wife is a Demon Queen^214
-Nano Machine^10
-Nidome no Jinsei wo Isekai de^41.002.2
-Nozomanu Fushi no Boukensha^28
-OOPARTS^11
-Otherworldly Sword King's Survival Records^55
-Overgeared^42
-Overlord^56.1.2
-Pale Throne^40
-Player Reborn^182
-Ranker Who Lives A Second Time^68
-Ranker's Return^15
-Re:Monster^62
-Reborn 80,000 Years^117
-Rengoku Deadroll^9
-Rules for Peddling in Another World^25
-Saikyou Mahoushi no Inton Keikaku^13.1
-Shikkaku Mon no Saikyou Kenja^36
-Record Of Ragnarok^35
-Skeleton Soldier Couldn'T Protect The Dungeon^86
-Slave B^37.6
-Solo Leveling^117
-Special Martial Arts Extreme Hell Private High School^69.005.5
-Star Martial God Technique^369
-Surviving Demon^10
-Tales of Demons and Gods^291
-Tanaka no Isekai Nariagari^5
-Tanaka The Wizard^22
-Tate no Yuusha no Nariagari^67
-Tensei Kenja No Isekai Raifu ~Daini No Shokugyo Wo Ete, Sekai Saikyou Ni Narimashita~^16
-Tensei Shitara Ken deshita^38
-Tensei Shitara Slime Datta Ken^73
-The Beginning After The End^72
-The Blade of Evolution-Walking Alone in the Dungeon^20
-The Descent of the Demonic Master^61
-The Dungeon Master^50
-The Gamer^0
-The God of Death^5
-The God of High School^475
-The Great Mage Returns After 4000 Years^43
-The Heaven's List^57.005.5
-The Legendary Moonlight Sculptor^160
-The Live^40
-The Magic Chef Of Ice And Fire^59
-The New Gate^60
-The Portal of Wonderland^125
-The Rebirth of an 8th-Circled Wizard^31
-The Reincarnation Magician Of The Inferior Eyes^31
-The Scholar's Reincarnation^142
-The Second Coming of Gluttony^46
-The Strongest Magical Swordsman Ever Reborn as an F-Rank Adventurer^16
-The Swordsman Called the Countless Swords Sorcerer^15
-The tutorial tower of the advanced player^14
-The Unsuccessful Yet Academically Unparalleled Sage^6.004.4
-Toaru Ossan no VRMMO Katsudouki^61.002
-Tondemo Skill de Isekai Hourou Meshi^30
-Tower into the Clouds^95
-Tower of Gods^0
-Trigger^6
-Tsuki ga Michibiku Isekai Douchuu^55
-Tsuyokute New Saga^77
-Ubau Mono Ubawareru Mono^8.001.1
-Ubel Blatt^161
-unOrdinary^193
-Warble^109
-Wizardly Tower^0.5
-World Teacher - Isekaishiki Kyouiku Agent^29
-Yin Zhi Shoumuren^317
+A Returner's Magic Should Be Special^Jeon Sun-Wook^118^kr^None^118
+Again My Life^이해날^16^kr^None^17
+Apotheosis^Ranzai Studio^622^cn^None^624
+Arafoo Shachiku no Golem Master^Takami Ryousen^16^jp^None^16
+Arifureta Shokugyou de Sekai Saikyou^Shirakome Ryo^42^jp^None^44
+Solo Auto-Hunting^Black Seed Entertainment^40^cn^None^40
+Battle Through The Heavens^Tian Can Tu Dou^304^cn^None^306
+Berserk of Gluttony^Isshiki Ichika^26^jp^None^28
+Black Haze^Yong Yong^228^jp^None^228
+Blind Faith Descent^HER^78^jp^None^80
+Boku no Heya ga Dungeon no Kyuukeijo ni Natteshimatta Ken^Tougoku Fudou^23^jp^None^24
+Boushoku-Hi no Ken^Necoco^6^jp^None^8
+Cate Land^Doris^39^jp^None^70
+Chi Huang Chuan Qi^Yun Tian Kong^93^cn^None^96
+CITY OF SANCTUARY^熊宝宝^21^cn^None^23
+Cultivation Chat Group^Legend of the Paladin^246^jp^None^252
+Dead Sorcerer's City^Kim Carnby^188^jp^None^189
+Dimensional Mercenary^Keum Ho^128^kr^None^131
+Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka II^Oomori Fujino^0^jp^None^3
+Dungeon Reset^Ant Studio^45^kr^None^45
+Tales of Demons and Gods^Mad Snail^0^cn^None^291.5

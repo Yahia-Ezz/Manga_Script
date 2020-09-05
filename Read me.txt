@@ -1,0 +1,32 @@
+Please make sure to fill in the 'cfg.ini' initial parametes before running the scirpt !.
+-The username of your Mangadex login
+-The password of your Mangadex login
+-The name of the text file of the magna you will be using.
+
+
+-------------------------------------------------------------------------------------
+Example on how to fill the manga text file for automatic Checking if there are new updates or not.
+not that '^' is used as a delimiter
+There are 3 structures to add mangas.
+1)
+MangaName1^MangaAuthor1^LastChapterRead1
+MangaName2^MangaAuthor2^LastChapterRead2
+etc
+Example:
+Solo Leveling^Chugong 추공^115
+2)
+MangaName2^MangaAuthor2
+Example:
+Solo Leveling^Chugong 추공
+
+2)
+MangaName1^^LastChapterRead1
+Example:
+Solo Leveling^^115
+
+3)
+MangaName1
+Example:
+Solo Leveling
+
+Note it's prefered to add the Author name to check for the correct manga.
