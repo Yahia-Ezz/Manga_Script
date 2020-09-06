@@ -135,7 +135,7 @@ def DisplayDiff(n):
 	else:
 		color='red'
 	if(Diff != 0):
-		print(str(n)+' - '+MangaList[n].Name+":"+ colored(str(Diff),color))
+		print(str(n)+' - '+MangaList[n].Name+":"+ colored(str(round(Diff,1)),color))
 
 def GetNewChapters(n):
 	if((MangaList[n].Origin == 'None') or (MangaList[n].Origin == 'None\n')):
