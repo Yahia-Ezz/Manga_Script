@@ -9,8 +9,9 @@ colorama.init()
 ## Define & Get Arguments
 ################################################################################
 commands = ArgumentParser(description='Manga Script Arguments...')
-commands.add_argument('-v', '--verbose',      dest='verbose',       default=10,      type=int,          help='Set verbosity level of program from 0 (off) to 10 (verbal diarrhea).')
-commands.add_argument('-m', '--max',          dest='maxManga',      default=1000000, type=int,          help='Max number of mangas to load')
+commands.add_argument('-v', '--verbose',       dest='verbose',       default=10,      type=int,             help='Set verbosity level of program from 0 (off) to 10 (verbal diarrhea).')
+commands.add_argument('-m', '--max',           dest='maxManga',      default=1000000, type=int,             help='Max number of mangas to load')
+commands.add_argument(      '--printNoUnread', dest='printNoUnread', default=False,   action='store_true',  help='Print no unread chapters')
 commands, unknown = commands.parse_known_args()
 
 if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.join(sys.argv),'white','on_blue'))
@@ -155,7 +156,7 @@ def DisplayDiff(n):
 		color='red'
 	if(commands.verbose>=2):
 		if(Diff != 0): print(str(n)+' - '+MangaList[n].Name+": "+ colored(str(Diff)+' unread chapter'+('s' if Diff>1 else ''),color))
-		else: print(str(n)+' - '+MangaList[n].Name+": "+ colored('no unread chapters',color))
+		elif (commands.printNoUnread): print(str(n)+' - '+MangaList[n].Name+": "+ colored('no unread chapters',color))
 
 def GetNewChapters(n):
 	if((MangaList[n].Origin == 'None') or (MangaList[n].Origin == 'None\n')):
