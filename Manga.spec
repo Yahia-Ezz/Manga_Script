@@ -41,7 +41,7 @@ Isekai Maou to Shoukan Shoujo Dorei Majutsu^Murasaki Yukiya^2.1^jp^None^61.1
 Isekai Shoukan wa Nidome Desu^Kishimoto Kazuha^20.2^jp^None^20.2
 Jaryuu Tensei^Seto Meguru^27^jp^None^27
 Kenja no Mago^Yoshioka Tsuyoshi^51^jp^None^52
-Kill the Hero^D-Dart^31.2^kr^None^32
+Kill the Hero^D-Dart^32^kr^None^32
 The Strange Adventure of a Broke Mercenary^Mine^14^jp^None^15.2
 Kuro no Souzou Shoukanshi - Tenseisha no Hangyaku^Ikui Sora^26^jp^None^26
 Outlaws^H20^23^jp^None^26
@@ -49,17 +49,17 @@ Leveling Up, By Only Eating!^Park Min Gyu^35^kr^None^36
 Life Howling^Sung Sang-Young^57^jp^None^57
 Lv2 kara Cheat datta Moto Yuusha Kouho no Mattari Isekai Life^Kinojo Miya^15^jp^None^16
 LV999 no Murabito^Hoshitsuki Koneko^36^jp^None^36
-Mairimashita! Iruma-kun^Osamu Nishi^147^jp^None^151
+Mairimashita! Iruma-kun^Osamu Nishi^147^jp^None^151.5
 Manuke na FPS Player ga Isekai e Ochita Baai^Jiraigen^4.4^jp^None^21.4
-Martial Legacy^GK Studio^111^cn^None^90
+Martial Legacy^GK Studio^111^jp^None^111
 Medical Return^Yuin^78^kr^None^81
 Monogatari no Naka no Hito^Tanaka Nijusan^19^jp^None^19
-Moshi Fanren^Amazing Works^259^jp^None^264
+Moshi Fanren^Amazing Works^259^jp^None^265
 My Wife is a Demon Queen^Rong Rong^214^cn^None^218
 Nano Machine^Han-Joong-Wueol-Ya^10^cn^None^11
 Nidome no Jinsei wo Isekai de^MINE^41.2^jp^None^41.2
 Nozomanu Fushi no Boukensha^Okano Yuu^28^jp^None^28
-OOPARTS^성 진^11^cn^None^12
+OOPARTS^성 진^11^cn^None^14
 Otherworldly Sword King's Survival Records^Lim Kyung Bae^55^jp^None^55
 Overgeared^Dong Wook Lee^42^kr^None^42
 Overlord^Maruyama Kugane^56.2^jp^None^56.2
@@ -68,23 +68,23 @@ Player Reborn^Meng Xiao Hua^182^cn^None^183
 Ranker Who Lives A Second Time^Nong Nong^68^kr^None^68
 Ranker s Return^Youngbiram^15^kr^None^15
 Re:Monster^Kanekiru Kogitsune^62^jp^None^63
-Reborn 80,000 Years^Zhang Yue^117^cn^None^123
+Reborn 80,000 Years^Zhang Yue^117^cn^None^125
 Rengoku Deadroll^KAWAMOTO Homura^9^jp^None^9
 Rules for Peddling in Another World^Zero Creation Animation^25^jp^None^28
-Saikyou Mahoushi no Inton Keikaku^Izushiro^13.1^jp^None^13
+Saikyou Mahoushi No Inton Keikaku^Izushiro^13^jp^None^13
 Shikkaku Mon no Saikyou Kenja^Shinkou Shotou^36^jp^None^37
 Record Of Ragnarok^Fukui Takumi^35^jp^None^36
 Skeleton Soldier Couldn'T Protect The Dungeon^Sosori^86^kr^None^95
-Slave B^Imines^37.6^kr^None^39
+Slave B^Imines^39^kr^None^39
 Solo Leveling^Chugong^117^kr^None^117
 Special Martial Arts Extreme Hell Private High School^Huh Il^69.5^jp^None^69.5
-Star Martial God Technique^Mad Snail^369^cn^None^376
+Star Martial God Technique^Mad Snail^369^cn^None^377
 Surviving Demon^Wolf Wei^10^jp^None^10
 Tales of Demons and Gods^Mad Snail^0^cn^None^291.5
 Tanaka no Isekai Nariagari^Guri^5^jp^None^5
 Tanaka The Wizard^Buncololi^22^jp^None^22
 Tate no Yuusha no Nariagari^Aneko Yusagi^67^jp^None^68
-Tensei Kenja No Isekai Raifu ~Daini No Shokugyo Wo Ete, Sekai Saikyou Ni Narimashita~^Shinkou Shotou^16^jp^None^None
+Tensei Kenja no Isekai Life^Shinkou Shotou^16^jp^None^17
 Tensei Shitara Ken deshita^Tanaka Yuu^38^jp^None^39
 Tensei Shitara Slime Datta Ken^Fuse^73^jp^None^74
 The Beginning After The End^TurtleMe^72^gb^None^73
@@ -93,7 +93,7 @@ The Descent of the Demonic Master^Wolbaek^61^kr^None^63
 The Dungeon Master^Jae-Hoo Park^50^kr^None^95
 The Gamer^Sung Sang-Young^0^kr^None^342
 The God of Death^.^5^cn^None^5
-The God of High School^PARK Yong-je^475^kr^None^110
+The God of High School^PARK Yong-je^475^jp^None^479
 The Great Mage Returns After 4000 Years^Barnacle^43^kr^None^43
 The Heaven's List^Tian Can Tu Dou^57.5^jp^None^57.5
 The Legendary Moonlight Sculptor^Nam Heesung^160^kr^None^160

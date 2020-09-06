@@ -1,9 +1,22 @@
-from dataclasses import dataclass
 from termcolor import colored
-from backports import configparser
-import requests
-import codecs
-import re
+import colorama, configparser, requests, re, sys
+from argparse import ArgumentParser
+
+## Necessary for ANSI colors used in termcolor to work with the windows terminal
+colorama.init()
+
+################################################################################
+## Define & Get Arguments
+################################################################################
+commands = ArgumentParser(description='Manga Script Arguments...')
+commands.add_argument('-v', '--verbose',       dest='verbose',       default=10,      type=int,             help='Set verbosity level of program from 0 (off) to 10 (verbal diarrhea).')
+commands.add_argument('-m', '--max',           dest='maxManga',      default=1000000, type=int,             help='Max number of mangas to load')
+commands.add_argument(      '--printNoUnread', dest='printNoUnread', default=False,   action='store_true',  help='Print no unread chapters')
+commands, unknown = commands.parse_known_args()
+
+if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.join(sys.argv),'white','on_blue'))
+if(commands.maxManga!=1000000): print(colored('Max number of mangas to load: '+ str(commands.maxManga),'white','on_magenta')+'\n')
+else: print(colored('No max number of mangas to load specified','white','on_magenta')+'\n')
 
 #****************************************************************************#
 #                               Global Variables   	                         #
@@ -47,7 +60,6 @@ Format['MangakakalotKey']={' ':'_',',':'_','!':'','\'':'',':':'','.':''}
 #                               Global Variables   	                         #
 #****************************************************************************#
 
-@dataclass
 class MyMangaStruct(object):
 	def __init__(self,Name,Author,ChapterRead,Origin,WebsiteKey,NewChapter):
 		self.Name = Name
@@ -62,19 +74,24 @@ class MyMangaStruct(object):
 #****************************************************************************#
 
 def PopulateMangaList():
-	with codecs.open(MangaFile, 'r', 'utf8') as my_file:
-		for line in my_file:
-			Tmp=line.split('^')
-			if(len(Tmp) == 1):
-				MangaList.append(MyMangaStruct(Tmp[0].rstrip('\r\n'),'None',str(0),'None','None','None'))
-			elif(len(Tmp) == 2):
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip('\r\n'),str(0),'None','None','None'))
-			elif(len(Tmp) == 3):
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2].rstrip('\r\n'),'None','None','None'))
-			elif(len(Tmp) == 5):
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],Tmp[4],'None'))
-			else:
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],Tmp[4],Tmp[5]))
+
+	with open(MangaFile, 'r', encoding='utf8') as mangaFile:
+		for mangaIx,manga in enumerate(mangaFile): 
+			if mangaIx>=commands.maxManga: continue
+			manga=[text.strip() for text in manga.split('^')]
+			Name=manga[0]
+			try: Author=manga[1]
+			except: Author='None'
+			try: ChapterRead=manga[2]
+			except: ChapterRead= '0'
+			try: Origin=manga[3]
+			except: Origin= 'None'
+			try: WebsiteKey=manga[4]
+			except: WebsiteKey= 'None'
+			try: NewChapter=manga[5]
+			except: NewChapter= 'None'
+
+			MangaList.append(MyMangaStruct(Name,Author,ChapterRead,Origin,WebsiteKey,NewChapter))
 
 def InvalidChapterHandler(n):
 	Key = 'MangaTxKey'
@@ -103,15 +120,9 @@ def InvalidChapterHandler(n):
 def GetMangaDexSession():
 	global MajorSeassion,MajorSeassionFlag
 	url = 'https://mangadex.org/ajax/actions.ajax.php?function=login&amp;nojs=1'
-	with requests.session() as session:
-		payload = {
-					"login_username": MyUsername,
-					"login_password": MyPassword
-				  }
-		
-		header = {
-					'x-requested-with': 'XMLHttpRequest'
-				 }
+	session= requests.session()
+	payload = {"login_username": MyUsername,"login_password": MyPassword }
+	header  = {'x-requested-with': 'XMLHttpRequest' }
 	if(MyUsername == 'ValidMangaDexUsername'):
 		print('Please update the \'cfg.ini\' with a valid Username and Password for MangaDex to continue')
 		exit()
@@ -130,15 +141,16 @@ def GetMangaDexSession():
 
 def DisplayDiff(n):
 	Diff = 	float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead)
-	if(Diff > 0):
-		color='green'
-	else:
-		color='red'
-	if(Diff != 0):
-		print(str(n)+' - '+MangaList[n].Name+":"+ colored(str(Diff),color))
+	Diff =  round(Diff,(1 if Diff%1!=0 else None))
+	if(Diff > 0):   color='green'
+	elif(Diff==0):  color='cyan'
+	else:           color='red'
+	if(commands.verbose>=2):
+		if(Diff != 0): print(str(n)+' - '+MangaList[n].Name+": "+ colored(str(Diff)+' unread chapter'+('s' if Diff>1 else ''),color))
+		elif (commands.printNoUnread): print(str(n)+' - '+MangaList[n].Name+": "+ colored('no unread chapters',color))
 
 def GetNewChapters(n):
-	if((MangaList[n].Origin == 'None') or (MangaList[n].Origin == 'None\n')):
+	if((MangaList[n].Origin == 'None')):
 		MangaList[n].Origin=GetMangaOrigin(n)
 	if(MangaList[n].Origin == 'cn'):
 		MangaList[n].NewChapter = GetLatestChapter(n,'MangaTxKey')
@@ -186,16 +198,15 @@ def GetFormatedUrl(n,Key:str):
 
 def UpdateMangaFile():
 	global MangaList
-	i=0
-	MyMangaFile = codecs.open(MangaFile, 'r', 'utf8') 
+	MyMangaFile = open(MangaFile, 'r', encoding='utf8') 
 	MyMangaLines = MyMangaFile.readlines()
-	for Line in (MyMangaLines):
-		Tmp = str(MangaList[i].Name) + "^" + str(MangaList[i].Author) + "^" + str(MangaList[i].ChapterRead).strip('\n') + "^"  
-		Tmp += str(MangaList[i].Origin) + "^" + str(MangaList[i].WebsiteKey) + "^"
-		Tmp += (str(MangaList[i].NewChapter)+'\n') if (str(MangaList[i].NewChapter).find('\n') == -1) else (str(MangaList[i].NewChapter))
-		MyMangaLines[i] = Tmp
-		i += 1
-	MyMangaFile = codecs.open(MangaFile, 'w', 'utf8') 
+	for LineIx,Line in enumerate(MyMangaLines):
+		if LineIx>=commands.maxManga: continue
+		Tmp = str(MangaList[LineIx].Name) + "^" + str(MangaList[LineIx].Author) + "^" + str(MangaList[LineIx].ChapterRead).strip('\n') + "^"  
+		Tmp += str(MangaList[LineIx].Origin) + "^" + str(MangaList[LineIx].WebsiteKey) + "^"
+		Tmp += (str(MangaList[LineIx].NewChapter)+'\n') if (str(MangaList[LineIx].NewChapter).find('\n') == -1) else (str(MangaList[LineIx].NewChapter))
+		MyMangaLines[LineIx] = Tmp
+	MyMangaFile = open(MangaFile, 'w', encoding='utf8') 
 	MyMangaFile.writelines(MyMangaLines)
 	MyMangaFile.close()
 
