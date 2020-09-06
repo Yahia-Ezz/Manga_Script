@@ -1,12 +1,19 @@
-from dataclasses import dataclass
 from termcolor import colored
-import colorama
-import configparser
-import requests
-import re
+import colorama, configparser, requests, re, sys
+from argparse import ArgumentParser
 
 ## Necessary for ANSI colors used in termcolor to work with the windows terminal
 colorama.init()
+
+################################################################################
+## Define & Get Arguments
+################################################################################
+commands = ArgumentParser(description='Manga Script Arguments...')
+commands.add_argument('-v', '--verbose',      dest='verbose',       default=10,      type=int,          help='Set verbosity level of program from 0 (off) to 10 (verbal diarrhea).')
+commands.add_argument('-m', '--max',          dest='maxManga',      default=1000000, type=int,          help='Max number of mangas to load')
+commands, unknown = commands.parse_known_args()
+
+if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.join(sys.argv),'white','on_blue')+'\n')
 #****************************************************************************#
 #                               Global Variables   	                         #
 #****************************************************************************#
@@ -49,7 +56,6 @@ Format['MangakakalotKey']={' ':'_',',':'_','!':'','\'':'',':':'','.':''}
 #                               Global Variables   	                         #
 #****************************************************************************#
 
-@dataclass
 class MyMangaStruct(object):
 	def __init__(self,Name,Author,ChapterRead,Origin,WebsiteKey,NewChapter):
 		self.Name = Name
@@ -64,8 +70,10 @@ class MyMangaStruct(object):
 #****************************************************************************#
 
 def PopulateMangaList():
+
 	with open(MangaFile, 'r', encoding='utf8') as mangaFile:
-		for manga in mangaFile:
+		for mangaIx,manga in enumerate(mangaFile): 
+			if mangaIx>=commands.maxManga: continue
 			manga=[text.strip() for text in manga.split('^')]
 			Name=manga[0]
 			try: Author=manga[1]
@@ -191,15 +199,14 @@ def GetFormatedUrl(n,Key:str):
 
 def UpdateMangaFile():
 	global MangaList
-	i=0
 	MyMangaFile = open(MangaFile, 'r', encoding='utf8') 
 	MyMangaLines = MyMangaFile.readlines()
-	for Line in (MyMangaLines):
-		Tmp = str(MangaList[i].Name) + "^" + str(MangaList[i].Author) + "^" + str(MangaList[i].ChapterRead).strip('\n') + "^"  
-		Tmp += str(MangaList[i].Origin) + "^" + str(MangaList[i].WebsiteKey) + "^"
-		Tmp += (str(MangaList[i].NewChapter)+'\n') if (str(MangaList[i].NewChapter).find('\n') == -1) else (str(MangaList[i].NewChapter))
-		MyMangaLines[i] = Tmp
-		i += 1
+	for LineIx,Line in enumerate(MyMangaLines):
+		if LineIx>=commands.maxManga: continue
+		Tmp = str(MangaList[LineIx].Name) + "^" + str(MangaList[LineIx].Author) + "^" + str(MangaList[LineIx].ChapterRead).strip('\n') + "^"  
+		Tmp += str(MangaList[LineIx].Origin) + "^" + str(MangaList[LineIx].WebsiteKey) + "^"
+		Tmp += (str(MangaList[LineIx].NewChapter)+'\n') if (str(MangaList[LineIx].NewChapter).find('\n') == -1) else (str(MangaList[LineIx].NewChapter))
+		MyMangaLines[LineIx] = Tmp
 	MyMangaFile = open(MangaFile, 'w', encoding='utf8') 
 	MyMangaFile.writelines(MyMangaLines)
 	MyMangaFile.close()
