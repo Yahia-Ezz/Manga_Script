@@ -1,10 +1,13 @@
 from dataclasses import dataclass
 from termcolor import colored
-from backports import configparser
+import colorama
+import configparser
 import requests
 import codecs
 import re
 
+## Necessary for ANSI colors used in termcolor to work with the windows terminal
+colorama.init()
 #****************************************************************************#
 #                               Global Variables   	                         #
 #****************************************************************************#
