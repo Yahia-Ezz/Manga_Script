@@ -15,7 +15,7 @@ commands.add_argument(      '--printNoUnread', dest='printNoUnread', default=Fal
 commands, unknown = commands.parse_known_args()
 
 if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.join(sys.argv),'white','on_blue'))
-if(commands.maxManga!=1000000): print(colored('Max number of mangas to load: '+ str(commands.maxManga),'white','on_magenta')+'\n')
+if(commands.maxManga!=1000000) and (commands.verbose>=2): print(colored('Max number of mangas to load: '+ str(commands.maxManga),'white','on_magenta')+'\n')
 else: print(colored('No max number of mangas to load specified','white','on_magenta')+'\n')
 
 #****************************************************************************#
@@ -115,7 +115,7 @@ def InvalidChapterHandler(n):
 				MangaList[n].Origin='kr'
 				return Chap[0].replace('-','.')
 			else:
-				print(str(n)+' - '+colored('Unable to find '+MangaList[n].Name+' on anywebsite','yellow'))
+				if(10>=commands.verbose>=2): print(str(n)+' - '+colored('Unable to find '+MangaList[n].Name+' on anywebsite','yellow'))
 
 def GetMangaDexSession():
 	global MajorSeassion,MajorSeassionFlag
@@ -125,7 +125,7 @@ def GetMangaDexSession():
 	header  = {'x-requested-with': 'XMLHttpRequest' }
 	if(MyUsername == 'ValidMangaDexUsername'):
 		print('Please update the \'cfg.ini\' with a valid Username and Password for MangaDex to continue')
-		exit()
+		raise Exception ('Invalid login information')
 	else:
 		if(MajorSeassionFlag == 0): 		  
 			req = session.post(url,headers=header,data=payload)
@@ -135,7 +135,7 @@ def GetMangaDexSession():
 					MajorSeassion = session
 					return session
 			except:
-				print('Failed at creating a session')
+				raise Exception ('Failed at creating a session')
 		else:
 			return MajorSeassion							
 
@@ -145,7 +145,7 @@ def DisplayDiff(n):
 	if(Diff > 0):   color='green'
 	elif(Diff==0):  color='cyan'
 	else:           color='red'
-	if(commands.verbose>=2):
+	if(10>=commands.verbose>=2):
 		if(Diff != 0): print(str(n)+' - '+MangaList[n].Name+": "+ colored(str(Diff)+' unread chapter'+('s' if Diff>1 else ''),color))
 		elif (commands.printNoUnread): print(str(n)+' - '+MangaList[n].Name+": "+ colored('no unread chapters',color))
 
@@ -161,7 +161,7 @@ def GetNewChapters(n):
 	try:
 		DisplayDiff(n)
 	except:
-		print(str(n)+' - '+colored("Failed to calculate Diff",'red'))
+		if(10>=commands.verbose>=2):print(str(n)+' - '+colored("Failed to calculate Diff",'red'))
 	
 def GetLatestChapter(n,Key:str):
 	resp = requests.get(GetFormatedUrl(n,Key))
@@ -184,7 +184,7 @@ def GetMangaOrigin(n):
 	try:
 		return Org[0]
 	except:
-		print(str(n)+' - '+colored('Failed to get '+MangaList[n].Name+' Origin','yellow'))
+		if(10>=commands.verbose>=2):print(str(n)+' - '+colored('Failed to get '+MangaList[n].Name+' Origin','yellow'))
 		return 'None'
 
 def GetFormatedUrl(n,Key:str):
@@ -213,9 +213,33 @@ def UpdateMangaFile():
 def main():
 	global MajorSeassion
 	PopulateMangaList()
+	if(commands.verbose>=2):print(colored('Getting new chapters','white','on_blue'))
+
+	if(commands.verbose>10): progressBar = ProgressBar(len(MangaList))
 	for i in range (len(MangaList)):
+		if(commands.verbose>10): progressBar.update(1)
 		GetNewChapters(i)
+	if(commands.verbose>10): progressBar.close()
 	UpdateMangaFile()
+
+class ProgressBar:
+	def __init__(self, iterableCount=None, useErrStream=False):
+		try:
+			import tqdm
+			self.pbar = tqdm.tqdm(total=iterableCount,
+								  file=(sys.__stderr__ if useErrStream else sys.__stdout__),ascii=True)
+			self.tqdmSupport=True
+		except ImportError:
+			self.tqdmSupport=False
+			print('Warning: Module "tqdm" is not installed.')
+
+	def update(self, ammount=1):
+		if(self.tqdmSupport):
+			self.pbar.update(ammount)
+
+	def close(self):
+		if(self.tqdmSupport):
+			self.pbar.close()
 
 #****************************************************************************#
 #                               Main Entry Point   	                         #
