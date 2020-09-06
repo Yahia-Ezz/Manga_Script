@@ -13,7 +13,10 @@ commands.add_argument('-v', '--verbose',      dest='verbose',       default=10, 
 commands.add_argument('-m', '--max',          dest='maxManga',      default=1000000, type=int,          help='Max number of mangas to load')
 commands, unknown = commands.parse_known_args()
 
-if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.join(sys.argv),'white','on_blue')+'\n')
+if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.join(sys.argv),'white','on_blue'))
+if(commands.maxManga!=1000000): print(colored('Max number of mangas to load: '+ str(commands.maxManga),'white','on_magenta')+'\n')
+else: print(colored('No max number of mangas to load specified','white','on_magenta')+'\n')
+
 #****************************************************************************#
 #                               Global Variables   	                         #
 #****************************************************************************#
@@ -143,12 +146,16 @@ def GetMangaDexSession():
 
 def DisplayDiff(n):
 	Diff = 	float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead)
+	Diff=round(Diff,(1 if Diff%1!=0 else None))
 	if(Diff > 0):
 		color='green'
+	elif(Diff==0):
+		color='cyan'
 	else:
 		color='red'
-	if(Diff != 0):
-		print(str(n)+' - '+MangaList[n].Name+":"+ colored(str(round(Diff,1)),color))
+	if(commands.verbose>=2):
+		if(Diff != 0): print(str(n)+' - '+MangaList[n].Name+": "+ colored(str(Diff)+' unread chapter'+('s' if Diff>1 else ''),color))
+		else: print(str(n)+' - '+MangaList[n].Name+": "+ colored('no unread chapters',color))
 
 def GetNewChapters(n):
 	if((MangaList[n].Origin == 'None') or (MangaList[n].Origin == 'None\n')):
