@@ -1,4 +1,4 @@
 [DEFAULT]
-UserName = test
+UserName = ValidMangaDexUsername
 Password = ValidMangaDexPassword
 MangaFile = MangaTextFile.txt

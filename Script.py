@@ -3,7 +3,6 @@ from termcolor import colored
 import colorama
 import configparser
 import requests
-import codecs
 import re
 
 ## Necessary for ANSI colors used in termcolor to work with the windows terminal
@@ -65,19 +64,22 @@ class MyMangaStruct(object):
 #****************************************************************************#
 
 def PopulateMangaList():
-	with codecs.open(MangaFile, 'r', 'utf8') as my_file:
-		for line in my_file:
-			Tmp=line.split('^')
-			if(len(Tmp) == 1):
-				MangaList.append(MyMangaStruct(Tmp[0].rstrip('\r\n'),'None',str(0),'None','None','None'))
-			elif(len(Tmp) == 2):
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1].rstrip('\r\n'),str(0),'None','None','None'))
-			elif(len(Tmp) == 3):
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2].rstrip('\r\n'),'None','None','None'))
-			elif(len(Tmp) == 5):
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],Tmp[4],'None'))
-			else:
-				MangaList.append(MyMangaStruct(Tmp[0],Tmp[1],Tmp[2],Tmp[3],Tmp[4],Tmp[5]))
+	with open(MangaFile, 'r', encoding='utf8') as mangaFile:
+		for manga in mangaFile:
+			manga=[text.strip() for text in manga.split('^')]
+			Name=manga[0]
+			try: Author=manga[1]
+			except: Author='None'
+			try: ChapterRead=manga[2]
+			except: ChapterRead= '0'
+			try: Origin=manga[3]
+			except: Origin= 'None'
+			try: WebsiteKey=manga[4]
+			except: WebsiteKey= 'None'
+			try: NewChapter=manga[5]
+			except: NewChapter= 'None'
+
+			MangaList.append(MyMangaStruct(Name,Author,ChapterRead,Origin,WebsiteKey,NewChapter))
 
 def InvalidChapterHandler(n):
 	Key = 'MangaTxKey'
@@ -190,7 +192,7 @@ def GetFormatedUrl(n,Key:str):
 def UpdateMangaFile():
 	global MangaList
 	i=0
-	MyMangaFile = codecs.open(MangaFile, 'r', 'utf8') 
+	MyMangaFile = open(MangaFile, 'r', encoding='utf8') 
 	MyMangaLines = MyMangaFile.readlines()
 	for Line in (MyMangaLines):
 		Tmp = str(MangaList[i].Name) + "^" + str(MangaList[i].Author) + "^" + str(MangaList[i].ChapterRead).strip('\n') + "^"  
@@ -198,7 +200,7 @@ def UpdateMangaFile():
 		Tmp += (str(MangaList[i].NewChapter)+'\n') if (str(MangaList[i].NewChapter).find('\n') == -1) else (str(MangaList[i].NewChapter))
 		MyMangaLines[i] = Tmp
 		i += 1
-	MyMangaFile = codecs.open(MangaFile, 'w', 'utf8') 
+	MyMangaFile = open(MangaFile, 'w', encoding='utf8') 
 	MyMangaFile.writelines(MyMangaLines)
 	MyMangaFile.close()
 
