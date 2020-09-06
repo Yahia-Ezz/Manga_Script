@@ -33,7 +33,7 @@ Regex['OriginKey']= r'(?<=<div><span class=\\\'rounded flag flag-)..(?=\\\' titl
 #Regex['MangaTxKey']=r'(?!href="https://mangatx\.com/manga/(\S+/chapter-))\d+(?=/\?style=paged">Chapter \d+</a></span>)'
 Regex['MangaTxKey']=r'(?<=href="https://mangatx\.com/manga/)\S+/chapter-(\d+|\d+-\d+)(?=/\?style=paged">Chapter \d+|\d+-\d+</a></span>)'
 Regex['WebtoonxyzKey']=r'(?!href="https://mangatx\.com/manga/(\S+/chapter-))\d+(?=/\?style=paged">Chapter \d+</a></span>)'
-Regex['MangakakalotKey']=r'(?<=</em>\n</h3>\n<em class="story_chapter">\n)(<a href="https://manga|<a rel="nofollow" href="https://manga)[a-z]+\.com/chapter/\S+/chapter_(\d+)(?=" title=")'
+Regex['MangakakalotKey']=r'(?<=<em class="story_chapter">\n)(<a href="https://manga|<a rel="nofollow" href="https://manga)[a-z]+\.com/chapter/\S+/chapter_(\d+|\d+\.\d+|\d+_\d+)(?=" title=")'
 #Regex.append('(?<=\<a rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/).+?(?=\/chapter_)')
 #Regex.append('(?<=\\n<a href=\"https:\/\/mangakakalot\.com\/chapter\/).+?(?=\/chapter_)')
 
@@ -98,7 +98,7 @@ def InvalidChapterHandler(n):
 				MangaList[n].Origin='kr'
 				return Chap[0].replace('-','.')
 			else:
-				print('Unable to find '+MangaList[n].Name+' on anywebsite')
+				print(str(n)+' - '+colored('Unable to find '+MangaList[n].Name+' on anywebsite','yellow'))
 
 def GetMangaDexSession():
 	global MajorSeassion,MajorSeassionFlag
@@ -135,7 +135,7 @@ def DisplayDiff(n):
 	else:
 		color='red'
 	if(Diff != 0):
-		print(MangaList[n].Name+":"+ colored(str(Diff),color))
+		print(str(n)+' - '+MangaList[n].Name+":"+ colored(str(Diff),color))
 
 def GetNewChapters(n):
 	if((MangaList[n].Origin == 'None') or (MangaList[n].Origin == 'None\n')):
@@ -149,13 +149,12 @@ def GetNewChapters(n):
 	try:
 		DisplayDiff(n)
 	except:
-		print("Failed to calculate Diff")
-
+		print(str(n)+' - '+colored("Failed to calculate Diff",'red'))
 	
 def GetLatestChapter(n,Key:str):
 	resp = requests.get(GetFormatedUrl(n,Key))
 	Chap = re.search(Regex[Key],str(resp.text))
-	if(Chap != None):
+	if(Chap != None ):
 		if (Key == 'MangaTxKey'):
 			return Chap[1].replace('-','.')
 		elif(Key == 'WebtoonxyzKey'):
@@ -173,7 +172,7 @@ def GetMangaOrigin(n):
 	try:
 		return Org[0]
 	except:
-		print('Failed to get '+MangaList[n].Name+' Origin')
+		print(str(n)+' - '+colored('Failed to get '+MangaList[n].Name+' Origin','yellow'))
 		return 'None'
 
 def GetFormatedUrl(n,Key:str):
