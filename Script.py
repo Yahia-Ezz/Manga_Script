@@ -1,6 +1,7 @@
 from termcolor import colored
-import colorama, configparser, requests, re, sys
+import colorama, configparser, requests, re, sys, os
 from argparse import ArgumentParser
+from lib.generalTools import ProgressBar
 
 ## Necessary for ANSI colors used in termcolor to work with the windows terminal
 colorama.init()
@@ -23,10 +24,10 @@ else: print(colored('No max number of mangas to load specified','white','on_mage
 #****************************************************************************#
 
 parser = configparser.ConfigParser()
-parser.read_file(open('cfg.ini'))
+parser.read_file(open(os.path.join('config','cfg.ini')))
 MyUsername = parser['DEFAULT']['Username']
 MyPassword = parser['DEFAULT']['Password']
-MangaFile = parser['DEFAULT']['MangaFile']
+MangaFile = os.path.join('config',parser['DEFAULT']['MangaFile'])
 
 MangaList= list()
 HmtlPage = None
@@ -74,7 +75,6 @@ class MyMangaStruct(object):
 #****************************************************************************#
 
 def PopulateMangaList():
-
 	with open(MangaFile, 'r', encoding='utf8') as mangaFile:
 		for mangaIx,manga in enumerate(mangaFile): 
 			if mangaIx>=commands.maxManga: continue
@@ -127,7 +127,7 @@ def GetMangaDexSession():
 		print('Please update the \'cfg.ini\' with a valid Username and Password for MangaDex to continue')
 		raise Exception ('Invalid login information')
 	else:
-		if(MajorSeassionFlag == 0): 		  
+		if(MajorSeassionFlag == 0): 
 			req = session.post(url,headers=header,data=payload)
 			try:
 				if(req.status_code == 200):
@@ -137,7 +137,7 @@ def GetMangaDexSession():
 			except:
 				raise Exception ('Failed at creating a session')
 		else:
-			return MajorSeassion							
+			return MajorSeassion
 
 def DisplayDiff(n):
 	Diff = 	float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead)
@@ -221,25 +221,6 @@ def main():
 		GetNewChapters(i)
 	if(commands.verbose>10): progressBar.close()
 	UpdateMangaFile()
-
-class ProgressBar:
-	def __init__(self, iterableCount=None, useErrStream=False):
-		try:
-			import tqdm
-			self.pbar = tqdm.tqdm(total=iterableCount,
-								  file=(sys.__stderr__ if useErrStream else sys.__stdout__),ascii=True)
-			self.tqdmSupport=True
-		except ImportError:
-			self.tqdmSupport=False
-			print('Warning: Module "tqdm" is not installed.')
-
-	def update(self, ammount=1):
-		if(self.tqdmSupport):
-			self.pbar.update(ammount)
-
-	def close(self):
-		if(self.tqdmSupport):
-			self.pbar.close()
 
 #****************************************************************************#
 #                               Main Entry Point   	                         #

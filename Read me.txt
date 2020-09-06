@@ -1,4 +1,4 @@
-Please make sure to fill in the 'cfg.ini' initial parametes before running the scirpt !.
+Please make sure to fill in the 'config/cfg.ini' initial parametes before running the scirpt !.
 -The username of your Mangadex login
 -The password of your Mangadex login
 -The name of the text file of the magna you will be using.
