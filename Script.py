@@ -120,15 +120,9 @@ def InvalidChapterHandler(n):
 def GetMangaDexSession():
 	global MajorSeassion,MajorSeassionFlag
 	url = 'https://mangadex.org/ajax/actions.ajax.php?function=login&amp;nojs=1'
-	with requests.session() as session:
-		payload = {
-					"login_username": MyUsername,
-					"login_password": MyPassword
-				  }
-		
-		header = {
-					'x-requested-with': 'XMLHttpRequest'
-				 }
+	session= requests.session()
+	payload = {"login_username": MyUsername,"login_password": MyPassword }
+	header  = {'x-requested-with': 'XMLHttpRequest' }
 	if(MyUsername == 'ValidMangaDexUsername'):
 		print('Please update the \'cfg.ini\' with a valid Username and Password for MangaDex to continue')
 		exit()
@@ -147,19 +141,16 @@ def GetMangaDexSession():
 
 def DisplayDiff(n):
 	Diff = 	float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead)
-	Diff=round(Diff,(1 if Diff%1!=0 else None))
-	if(Diff > 0):
-		color='green'
-	elif(Diff==0):
-		color='cyan'
-	else:
-		color='red'
+	Diff =  round(Diff,(1 if Diff%1!=0 else None))
+	if(Diff > 0):   color='green'
+	elif(Diff==0):  color='cyan'
+	else:           color='red'
 	if(commands.verbose>=2):
 		if(Diff != 0): print(str(n)+' - '+MangaList[n].Name+": "+ colored(str(Diff)+' unread chapter'+('s' if Diff>1 else ''),color))
 		elif (commands.printNoUnread): print(str(n)+' - '+MangaList[n].Name+": "+ colored('no unread chapters',color))
 
 def GetNewChapters(n):
-	if((MangaList[n].Origin == 'None') or (MangaList[n].Origin == 'None\n')):
+	if((MangaList[n].Origin == 'None')):
 		MangaList[n].Origin=GetMangaOrigin(n)
 	if(MangaList[n].Origin == 'cn'):
 		MangaList[n].NewChapter = GetLatestChapter(n,'MangaTxKey')
