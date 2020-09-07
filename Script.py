@@ -2,9 +2,6 @@ from termcolor import colored
 import colorama, configparser, requests, re, sys
 from argparse import ArgumentParser
 
-## Necessary for ANSI colors used in termcolor to work with the windows terminal
-colorama.init()
-
 ################################################################################
 ## Define & Get Arguments
 ################################################################################
@@ -19,15 +16,18 @@ if(commands.maxManga!=1000000): print(colored('Max number of mangas to load: '+ 
 else: print(colored('No max number of mangas to load specified','white','on_magenta')+'\n')
 
 #****************************************************************************#
-#                               Global Variables   	                         #
+#                               Startup __init__   	                         #
 #****************************************************************************#
-
 parser = configparser.ConfigParser()
 parser.read_file(open('cfg.ini'))
 MyUsername = parser['DEFAULT']['Username']
 MyPassword = parser['DEFAULT']['Password']
 MangaFile = parser['DEFAULT']['MangaFile']
-
+## Necessary for ANSI colors used in termcolor to work with the windows terminal
+colorama.init()
+#****************************************************************************#
+#                               Global Variables   	                         #
+#****************************************************************************#
 MangaList= list()
 HmtlPage = None
 MajorSeassion = None
@@ -43,10 +43,10 @@ Website['MangakakalotKey']='https://mangakakalot.com/search/story/$$MangaName$$'
 
 Regex = {}
 Regex['OriginKey']= r'(?<=<div><span class=\\\'rounded flag flag-)..(?=\\\' title=\\\'.+\\\'></span></div>)'
-#Regex['MangaTxKey']=r'(?!href="https://mangatx\.com/manga/(\S+/chapter-))\d+(?=/\?style=paged">Chapter \d+</a></span>)'
 Regex['MangaTxKey']=r'(?<=href="https://mangatx\.com/manga/)\S+/chapter-(\d+|\d+-\d+)(?=/\?style=paged">Chapter \d+|\d+-\d+</a></span>)'
 Regex['WebtoonxyzKey']=r'(?!href="https://mangatx\.com/manga/(\S+/chapter-))\d+(?=/\?style=paged">Chapter \d+</a></span>)'
 Regex['MangakakalotKey']=r'(?<=<em class="story_chapter">\n)(<a href="https://manga|<a rel="nofollow" href="https://manga)[a-z]+\.com/chapter/\S+/chapter_(\d+|\d+\.\d+|\d+_\d+)(?=" title=")'
+#Regex['MangaTxKey']=r'(?!href="https://mangatx\.com/manga/(\S+/chapter-))\d+(?=/\?style=paged">Chapter \d+</a></span>)'
 #Regex.append('(?<=\<a rel=\"nofollow\" href=\"https:\/\/manganelo\.com\/chapter\/).+?(?=\/chapter_)')
 #Regex.append('(?<=\\n<a href=\"https:\/\/mangakakalot\.com\/chapter\/).+?(?=\/chapter_)')
 
@@ -57,7 +57,7 @@ Format['WebtoonxyzKey']={' ':'+',',':'%2C','!':'%21','\'':'%27',':':'%3A'}
 Format['MangakakalotKey']={' ':'_',',':'_','!':'','\'':'',':':'','.':''}
 
 #****************************************************************************#
-#                               Global Variables   	                         #
+#                              User Classes		  	                         #
 #****************************************************************************#
 
 class MyMangaStruct(object):
@@ -210,15 +210,38 @@ def UpdateMangaFile():
 	MyMangaFile.writelines(MyMangaLines)
 	MyMangaFile.close()
 
-def main():
-	global MajorSeassion
-	PopulateMangaList()
+def DisplayNewChapters():
+	print(colored('Fetching New Chapters:','white','on_green'))
 	for i in range (len(MangaList)):
 		GetNewChapters(i)
 	UpdateMangaFile()
+
+def MarkChaptersAsRead():
+	print('Please enter the indexes of the chapters to be marked as read :\'0 15 129 ... etc \' and (X) to exit: ')
+	Var = input()
+	Var = Var.split(' ')
+	for i in  range(len(Var)):
+		try:
+			if( (Var[i].isdigit() == True) and (0 <= int(Var[i]) <= len(MangaList)) ):
+				MangaList[int(Var[i])].ChapterRead = MangaList[int(Var[i])].NewChapter
+		except:
+			None
+	UpdateMangaFile()
+	print('Done Marking')
+
+def main():
+	print('Please choose an Option :\n1- Fetch new manga chapters\n2- MarkChaptersAsRead')
+	Option=input()
+	if(Option == '1'):
+		DisplayNewChapters()
+	elif(Option == '2'):
+		MarkChaptersAsRead()
+	else:
+		print('Invalid input !')
 
 #****************************************************************************#
 #                               Main Entry Point   	                         #
 #****************************************************************************#
 if __name__ == '__main__':
+	PopulateMangaList()
 	main()
