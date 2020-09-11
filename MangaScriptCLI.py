@@ -1,7 +1,16 @@
 from termcolor import colored
 import colorama, configparser, requests, re, sys
 from argparse import ArgumentParser
-
+#****************************************************************************#
+#                               Startup __init__   	                         #
+#****************************************************************************#
+parser = configparser.ConfigParser()
+parser.read_file(open('cfg.ini'))
+MyUsername = parser['DEFAULT']['Username']
+MyPassword = parser['DEFAULT']['Password']
+MangaFile = parser['DEFAULT']['MangaFile']
+## Necessary for ANSI colors used in termcolor to work with the windows terminal
+colorama.init()
 ################################################################################
 ## Define & Get Arguments
 ################################################################################
@@ -15,16 +24,6 @@ if(commands.verbose>=10):print('Command to replicate this script: '+colored(' '.
 if(commands.maxManga!=1000000): print(colored('Max number of mangas to load: '+ str(commands.maxManga),'white','on_magenta')+'\n')
 else: print(colored('No max number of mangas to load specified','white','on_magenta')+'\n')
 
-#****************************************************************************#
-#                               Startup __init__   	                         #
-#****************************************************************************#
-parser = configparser.ConfigParser()
-parser.read_file(open('cfg.ini'))
-MyUsername = parser['DEFAULT']['Username']
-MyPassword = parser['DEFAULT']['Password']
-MangaFile = parser['DEFAULT']['MangaFile']
-## Necessary for ANSI colors used in termcolor to work with the windows terminal
-colorama.init()
 #****************************************************************************#
 #                               Global Variables   	                         #
 #****************************************************************************#
@@ -141,7 +140,7 @@ def GetMangaDexSession():
 
 def DisplayDiff(n):
 	Diff = 	float(MangaList[n].NewChapter)-float(MangaList[n].ChapterRead)
-	Diff =  round(Diff,(1 if Diff%1!=0 else None))
+	Diff =  round(Diff,(1 if Diff>0 else None))
 	if(Diff > 0):   color='green'
 	elif(Diff==0):  color='cyan'
 	else:           color='red'
@@ -230,14 +229,17 @@ def MarkChaptersAsRead():
 	print('Done Marking')
 
 def main():
-	print('Please choose an Option :\n1- Fetch new manga chapters\n2- MarkChaptersAsRead')
+	print('\nPlease choose an Option :\n1 - Fetch new manga chapters\n2 - Mark chapters as read\n3 - Exit')
 	Option=input()
 	if(Option == '1'):
 		DisplayNewChapters()
 	elif(Option == '2'):
 		MarkChaptersAsRead()
+	elif(Option == '3'):
+		exit()
 	else:
 		print('Invalid input !')
+	main()	
 
 #****************************************************************************#
 #                               Main Entry Point   	                         #
@@ -245,3 +247,5 @@ def main():
 if __name__ == '__main__':
 	PopulateMangaList()
 	main()
+
+
