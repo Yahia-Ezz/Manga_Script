@@ -108,6 +108,8 @@ class Ui_mainWindow(object):
 		self.label = QtWidgets.QLabel(self.centralwidget)
 		self.label.setGeometry(QtCore.QRect(400, 310, 351, 241))
 		self.label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
+		self.label.setOpenExternalLinks(True)
+		self.label.setWordWrap(True)
 		self.label.setObjectName("label")
 		mainWindow.setCentralWidget(self.centralwidget)
 		self.menubar = QtWidgets.QMenuBar(mainWindow)
@@ -142,13 +144,13 @@ class Ui_mainWindow(object):
 			self.progressBar.setProperty("value",(math.ceil((i*100)/(len(MangaList)-1))))
 
 	def ItemChanged(self):
-		self.ImageDisplay.setPixmap(QtGui.QPixmap(os.getcwd()+"\\cache\\"+(str(self.NewMangaList.currentItem().text()).replace('?',"").replace(':',""))+".jpg"))
-		self.label.setFont(QtGui.QFont("Times",pointSize =12,weight=QtGui.QFont.Bold))
-		self.label.setOpenExternalLinks(True)
 		n = int(self.NewMangaList.currentItem().whatsThis())
-		self.label.setText("Last Read Chapter : "+MangaList[n].ChapterRead+"\n\n\
-Latest Chapter : "+MangaList[n].NewChapter+"\n\n\
-Link : \n"+GetFormatedUrl(n,'MangaTxKey' if(MangaList[n].Origin == 'cn') else ('MangakakalotKey' if(MangaList[n].Origin == 'jp' ) else 'WebtoonxyzKey') ))
+		Link =  GetFormatedUrl(n,'MangaTxKey' if(MangaList[n].Origin == 'cn') else ('MangakakalotKey' if(MangaList[n].Origin == 'jp' ) else 'WebtoonxyzKey') )      
+		Description = "Last Read Chapter : "+MangaList[n].ChapterRead+"<br><br>Latest Chapter : "+MangaList[n].NewChapter+"<br><br>Link : "
+		Link='<a href="'+str(Link)+'">Manga Link</a><br>'
+		self.ImageDisplay.setPixmap(QtGui.QPixmap(os.getcwd()+"\\cache\\"+(str(self.NewMangaList.currentItem().text()).replace('?',"").replace(':',""))+".jpg"))
+		self.label.setFont(QtGui.QFont("Times",pointSize =14,weight=QtGui.QFont.Bold))
+		self.label.setText(Description+Link)
 
 #****************************************************************************#
 #                          Functions Implementation                          #

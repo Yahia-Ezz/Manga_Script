@@ -1,9 +1,9 @@
-A Returner's Magic Should Be Special^Jeon Sun-Wook^118^kr^None^119
-Again My Life^이해날^16^kr^None^17
-Apotheosis^Ranzai Studio^626^cn^None^626
+A Returner's Magic Should Be Special^Jeon Sun-Wook^119^kr^None^119
+Again My Life^이해날^17^kr^None^17
+Apotheosis^Ranzai Studio^627^cn^None^627
 Arafoo Shachiku no Golem Master^Takami Ryousen^16^jp^None^16
 Arifureta Shokugyou de Sekai Saikyou^Shirakome Ryo^42^jp^None^44
-Battle Through The Heavens^Tian Can Tu Dou^304^cn^None^307
+Battle Through The Heavens^Tian Can Tu Dou^307^cn^None^307
 Berserk of Gluttony^Isshiki Ichika^28^jp^None^28
 Black Haze^Yong Yong^228^jp^None^228
 Blind Faith Descent^HER^78^jp^None^80
@@ -15,8 +15,8 @@ Chi Huang Chuan Qi^Yun Tian Kong^93^cn^None^98
 Cultivation Chat Group^Legend of the Paladin^252^jp^None^252
 Dead Sorcerer's City^Kim Carnby^189^jp^None^189
 Dimensional Mercenary^Keum Ho^131^kr^None^131
-Dungeon Reset^Ant Studio^45^kr^None^45
-Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka II^Oomori Fujino^0^jp^None^4
+Dungeon Reset^Ant Studio^46^kr^None^45
+Dungeon ni Deai wo Motomeru no wa Machigatteiru Darou ka II^Oomori Fujino^4^jp^None^4
 Enen no Shouboutai^Ohkubo Atsushi^230^jp^None^233
 Enoch^S^14^jp^None^48
 Everlasting God of Sword^Meng Bai^111^jp^None^111
@@ -38,19 +38,19 @@ Is It Odd That I Became An Adventurer Even If I Graduated The Witchcraft Institu
 Isekai Maou to Shoukan Shoujo Dorei Majutsu^Murasaki Yukiya^2.1^jp^None^61.2
 Isekai Shoukan wa Nidome Desu^Kishimoto Kazuha^20.2^jp^None^20.2
 Jaryuu Tensei^Seto Meguru^27^jp^None^27
-Kenja no Mago^Yoshioka Tsuyoshi^51^jp^None^52
+Kenja no Mago^Yoshioka Tsuyoshi^51^jp^None^53
 Kill the Hero^D-Dart^32^kr^None^32
 Kuro no Souzou Shoukanshi - Tenseisha no Hangyaku^Ikui Sora^26^jp^None^26
 LV999 no Murabito^Hoshitsuki Koneko^36^jp^None^36
 Leveling Up, By Only Eating!^Park Min Gyu^35^kr^None^38
 Life Howling^Sung Sang-Young^57^jp^None^57
 Lv2 kara Cheat datta Moto Yuusha Kouho no Mattari Isekai Life^Kinojo Miya^15^jp^None^16
-Mairimashita! Iruma-kun^Osamu Nishi^147^jp^None^151.5
+Mairimashita! Iruma-kun^Osamu Nishi^147^jp^None^152
 Manuke na FPS Player ga Isekai e Ochita Baai^Jiraigen^4.4^jp^None^21.4
 Martial Legacy^GK Studio^111^jp^None^111
-Medical Return^Yuin^81^kr^None^82
+Medical Return^Yuin^82^kr^None^82
 Monogatari no Naka no Hito^Tanaka Nijusan^19^jp^None^19
-Moshi Fanren^Amazing Works^265^jp^None^265
+Moshi Fanren^Amazing Works^266^jp^None^266
 My Wife is a Demon Queen^Rong Rong^214^cn^None^219
 Nano Machine^Han-Joong-Wueol-Ya^11^cn^None^11
 Nidome no Jinsei wo Isekai de^MINE^41.2^jp^None^41.2
@@ -61,13 +61,13 @@ Outlaws^H20^26^jp^None^26
 Overgeared^Dong Wook Lee^42^kr^None^42
 Overlord^Maruyama Kugane^56.2^jp^None^56.2
 Pale Throne^Dazui^40^jp^None^40
-Player Reborn^Meng Xiao Hua^183^cn^None^184
+Player Reborn^Meng Xiao Hua^184^cn^None^184
 Ranker Who Lives A Second Time^Nong Nong^68^kr^None^68
 Ranker s Return^Youngbiram^15^kr^None^15
 Re:Monster^Kanekiru Kogitsune^63^jp^None^63
 Reborn 80,000 Years^Zhang Yue^117^cn^None^127
 Record Of Ragnarok^Fukui Takumi^36^jp^None^36
-Rengoku Deadroll^KAWAMOTO Homura^9^jp^None^9
+Rengoku Deadroll^KAWAMOTO Homura^9^jp^None^8
 Return to Player^인덱스 / 세혼^4^kr^None^4
 Rules for Peddling in Another World^Zero Creation Animation^28^jp^None^28
 Saikyou Mahoushi No Inton Keikaku^Izushiro^13^jp^None^13
@@ -90,36 +90,36 @@ Tensei Shitara Slime Datta Ken^Fuse^74^jp^None^74
 The Beginning After The End^TurtleMe^74^gb^None^74
 The Blade of Evolution-Walking Alone in the Dungeon^小刀^20^cn^None^20
 The Descent of the Demonic Master^Wolbaek^64^kr^None^64
-The Dungeon Master^Jae-Hoo Park^50^kr^None^96
+The Dungeon Master^Jae-Hoo Park^50^jp^None^50
 The Gamer^Sung Sang-Young^0^kr^None^345
-The God of Death^.^5^cn^None^6
+The God of Death^.^6^cn^None^6
 The God of High School^PARK Yong^475^jp^None^480
 The Great Mage Returns After 4000 Years^Barnacle^43^kr^None^43
 The Heaven's List^Tian Can Tu Dou^57.5^jp^None^57.5
 The Legendary Moonlight Sculptor^Nam Heesung^161^kr^None^161
 The Live Ant Studios^Black Ajin^40^jp^None^40
 The Magic Chef Of Ice And Fire^Tang Jia San Shao^59^jp^None^78
-The New Gate^Kazanami Shinogi^60^jp^None^61
+The New Gate^Kazanami Shinogi^60^jp^None^62
 The Portal of Wonderland^凯撒文化^127^cn^None^127
 The Rebirth of an 8th-Circled Wizard^Jari^35^kr^None^35
-The Reincarnation Magician Of The Inferior Eyes^Kankitsu Yusura^32^jp^None^33
-The Scholar's Reincarnation^Soo Yu Hyun^142^kr^None^144
+The Reincarnation Magician Of The Inferior Eyes^Kankitsu Yusura^33^jp^None^33
+The Scholar's Reincarnation^Soo Yu Hyun^144^kr^None^144
 The Second Coming of Gluttony^Ro Yujin^46^kr^None^46
 The Strange Adventure of a Broke Mercenary^Mine^15.2^jp^None^15.2
 The Strongest Magical Swordsman Ever Reborn as an F-Rank Adventurer^Kankitsu Yusura^17^jp^None^18
 The Strongest Wizard Becomes a Countryside Guardsman After Taking an Arrow to the Knee^Ezo Gingitsune^14.1^jp^None^14.1
 The Swordsman Called the Countless Swords Sorcerer^Takamitsu Akira^15^jp^None^15
-The Tutorial Tower of the Advanced Player^방구석김씨 / 오마감^17^kr^None^17
+Tutorial Tabui Goinmul^방구석김씨 / 오마감^18^kr^None^18
 The Unsuccessful Yet Academically Unparalleled Sage^Shiraishi Arata^6.4^jp^None^6.6
 Toaru Ossan no VRMMO Katsudouki^Shiina Howahowa^64^jp^None^64
 Tondemo Skill de Isekai Hourou Meshi^Eguchi Ren^32^jp^None^32
 Tower into the Clouds^Jiao Ran^95^jp^None^95
 Tower of God^SIU^0^jp^None^485
-Trigger^불만있냥^6^kr^None^9
-Tsuki ga Michibiku Isekai Douchuu^Azumi Kei^55^jp^None^56
-Tsuyokute New Saga^Abe Masayuki^77^jp^None^78
+Trigger^불만있냥^6^kr^None^11
+Tsuki ga Michibiku Isekai Douchuu^Azumi Kei^56^jp^None^56
+Tsuyokute New Saga^Abe Masayuki^78^jp^None^78
 Ubau Mono Ubawareru Mono^Mino^8.1^jp^None^8.1
-Ubel Blatt^Shiono Etorouji^161^jp^None^261
+Ubel Blatt^Shiono Etorouji^261^jp^None^261
 Warble^Cracker^112^kr^None^112
 Wizardly Tower^Sung Sang-Young^0.5^jp^None^71.5
 World Teacher - Isekaishiki Kyouiku Agent^Neko Kouichi^29^jp^None^30
