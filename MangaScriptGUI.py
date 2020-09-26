@@ -179,9 +179,9 @@ class Ui_MainWindow(object):
     def FetchManga(self):
         global MajorGUIListIndex
         if (MajorGUIListIndex != 0):
-            #self.tableWidget.setRowCount(0)
             for i in range (MajorGUIListIndex):
                 self.tableWidget.removeRow(i)
+            self.tableWidget.setRowCount(0)
             self.tableWidget.update() 
             MajorGUIListIndex = 0
             NewImageIndex = -1 
