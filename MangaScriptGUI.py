@@ -10,9 +10,9 @@
  ############################################################################################
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import configparser, requests, re, sys
+import configparser, requests, re, sys, os, numpy, PIL
+from PIL import Image
 import atexit , math
-import os 
 
 #****************************************************************************#
 #                              Startup __init__                              #
@@ -68,7 +68,7 @@ class MyMangaStruct(object):
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1018, 775)
+        MainWindow.resize(1018, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -144,13 +144,22 @@ class Ui_MainWindow(object):
         self.gridLayout.addItem(spacerItem1, 0, 4, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
+        #****************************************************************************#
+        #                             QMenuBar                                       #
+        #****************************************************************************#        
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1018, 21))
         self.menubar.setObjectName("menubar")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
+        #****************************************************************************#
+        #                             QStatusBar                                     #
+        #****************************************************************************#  
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -179,6 +188,7 @@ class Ui_MainWindow(object):
     def FetchManga(self):
         global MajorGUIListIndex
         if (MajorGUIListIndex != 0):
+            MarkChaptersAsRead()
             for i in range (MajorGUIListIndex):
                 self.tableWidget.removeRow(i)
             self.tableWidget.setRowCount(0)
@@ -235,6 +245,54 @@ def InvalidChapterHandler(n):
             if(Chap != None):
                 MangaList[n].Origin='kr'
                 return Chap[0].replace('-','.')
+
+# URL = r'https://www.webtoon.xyz/read/solo-leveling/'
+regex = r'(?<=<a href=\"$$URL$$chapter-)\d+(?=/\">\\nChapter \d+ </a>)'
+
+def ImageVerticalConcatination(ImgListNumber:int(),ChapterNumber:int()):
+    Imgs=[] ; ImgSize=[] ; CombinedImgs=[]; SumWidth = float()
+    for i in range(ImgListNumber):
+# Open all the Downloaded images using Pything Image Library in a list.
+        Imgs.append(PIL.Image.open("Images\\Ch "+str(ChapterNumber)+"\\"+str(i)+".jpg"))
+        SumWidth += int(Imgs[i].size[0])
+    AvgWidth = (SumWidth / ImgListNumber )
+    for OrigImg in Imgs[::1]:
+# Resize all images to match the avg width while maintaining ratio and convert its type to RGB for the stacking to work. 
+        NewImg = OrigImg.resize((round(AvgWidth,0),round((OrigImg.size[1]*AvgWidth/OrigImg.size[0]),0)), Image.ANTIALIAS)
+        NewImg = NewImg.convert('RGB')
+# Transform the images into a matrix.       
+        CombinedImgs.append(numpy.asarray(NewImg))
+
+def getUrlChapterLinksDownload(URL):
+    resp = requests.get(URL)
+    Regex = regex.replace(r'$$URL$$',URL.replace('.','\.'))
+    List = re.findall(Regex,str(resp.content))  
+    ListChapter = list()
+    for i in range(len(List)):
+        ListChapter.append(URL+'chapter-'+List[i]+'/')
+    ListChapter.reverse()
+    for n in range(len(ListChapter)):
+        resp = requests.get(str(ListChapter[n]))
+        Imgs = re.findall(r'(?<=src=\"\\t\\t\\t\\n\\t\\t\\t)https://cdn1\.webtoon\.xyz/.+?/chapter-\d+/\d+\.jpg(?=\" )',str(resp.content))
+        try:os.makedirs('Images\\Ch '+str(n+1))
+        except:None
+        for i in range(len(Imgs)):
+            resp = requests.get(Imgs[i])
+            file = open("Images\\Ch "+str(n+1)+"\\"+str(i)+".jpg", "wb")
+            file.write(resp.content)
+            file.close()
+        ImageVerticalConcatination(len(Imgs),n+1)
+
+
+
+
+
+# Stack images vertically.
+    CombinedImgsNewV = numpy.vstack(CombinedImgs)
+    CombinedImgsNewV = PIL.Image.fromarray(CombinedImgsNewV)
+# Save stack vertically.    
+    CombinedImgsNewV.save("Images\\Ch "+str(ChapterNumber)+"\\"+"00-Vertical.png")
+
 
 def GetMangaDexSession():
     global MajorSeassion,MajorSeassionFlag
