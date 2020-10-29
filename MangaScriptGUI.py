@@ -196,7 +196,7 @@ class Ui_MainWindow(object):
             MajorGUIListIndex = 0
             NewImageIndex = -1 
             LastImageIndex = -2
-        for i in range (len(MangaList)):
+        for i in range (120,len(MangaList)):
             FetchNewRanks(i)
             GetMangaImages(i)
             self.progressBar.setProperty("value",(math.ceil((i*100)/(len(MangaList)-1))))
@@ -411,14 +411,15 @@ def GetLatestChapter(n,Key:str):
         InvalidChapterHandler(n)
 
 def GetMangaImages(n):
+    global MajorSeassion,MajorSeassionFlag
     if(not os.path.isfile(os.getcwd()+"\\cache\\"+(str(MangaList[n].Name).replace('?',"").replace(':',""))+".jpg")):
-        if(not MajorSeassionFlag ):
+        if( MajorSeassionFlag == 0):
             sessoion = GetMangaDexSession()
         else:
             sessoion = MajorSeassion
         resp = sessoion.get(GetFormatedUrl(n,'OriginKey'))
         ImgLink = re.search(Regex['ImageKey'],str(resp.content))
-        try:Link = ImgLink[0]
+        try: Link = ImgLink[0]
         except: return
         URL ="https://mangadex.org/"+str(Link)
         resp = sessoion.get(URL)
@@ -439,7 +440,10 @@ def GetFormatedUrl(n,Key:str):
     NameSub = "".join([Format[Key].get(c, c) for c in MangaList[n].Name])
     AuthorSub = "".join([Format[Key].get(c, c) for c in MangaList[n].Author])
     if(Key == 'OriginKey' or Key == 'MangakakalotKey'):
-        UrlText = Website[Key].replace("$$MangaName$$",NameSub).replace("$$Author$$",AuthorSub)
+        if(MangaList[n].Author == 'None'):
+            UrlText = Website[Key].replace("$$MangaName$$",NameSub).replace("$$Author$$",'')
+        else:
+            UrlText = Website[Key].replace("$$MangaName$$",NameSub).replace("$$Author$$",AuthorSub)
     elif(Key == 'MangaTxKey'or Key == 'WebtoonxyzKey'):
         UrlText = Website[Key].replace("$$MangaName$$",NameSub)
     return UrlText
