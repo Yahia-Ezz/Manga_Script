@@ -196,7 +196,7 @@ class Ui_MainWindow(object):
             MajorGUIListIndex = 0
             NewImageIndex = -1 
             LastImageIndex = -2
-        for i in range (120,len(MangaList)):
+        for i in range (len(MangaList)):
             FetchNewRanks(i)
             GetMangaImages(i)
             self.progressBar.setProperty("value",(math.ceil((i*100)/(len(MangaList)-1))))
